@@ -10,9 +10,10 @@ spec:
         app: socketcluster
     spec:
       containers:
-      - name: sc-dummy
+      - name: sampleprivate
         imagePullPolicy: IfNotPresent
-        image: sc-dummy
+        image: rachilies/sampleprivate
+        # image: sc-dummy
         # image: socketcluster/socketcluster:v5.1.2
         ports:
         - containerPort: 8000
