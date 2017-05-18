@@ -1,0 +1,16 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: scc-ingress
+spec:
+  # tls:
+  #   - hosts: a.b.com
+  #   - secretName: scc-tls-credentials
+  rules:
+    - host: a.b.com
+      http:
+        paths:
+          - path: /
+            backend:
+              serviceName: socketcluster
+              servicePort: 8000

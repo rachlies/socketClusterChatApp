@@ -1,0 +1,33 @@
+apiVersion: v1
+kind: ReplicationController
+metadata:
+  name: nginxplus-rc
+spec:
+  replicas: 1
+  selector:
+    app: nginxplus
+  template:
+    metadata:
+      labels:
+        app: nginxplus
+    spec:
+      nodeSelector:
+        role: nginxplus
+      containers:
+      - name: nginxplus
+        imagePullPolicy: IfNotPresent
+        image: nginxplus
+        ports:
+          - name: http
+            containerPort: 8000
+            hostPort: 8000
+          - name: http-alt
+            containerPort: 8009
+            hostPort: 8009
+        volumeMounts:
+          - mountPath: "/etc/nginx/conf.d"
+            name: etc-nginx-confd
+      volumes:
+        - hostPath:
+            path: "/etc/nginx/conf.d"
+          name: etc-nginx-confd
