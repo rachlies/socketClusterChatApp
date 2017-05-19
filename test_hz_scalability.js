@@ -80,7 +80,7 @@ module.exports = clientModule;
 if(require.main == module) {
 
 	var options = {
-		'hostname':'192.168.99.100', 
+		'hostname':'104.154.63.189', 
 		port: 8000
 	}
 
