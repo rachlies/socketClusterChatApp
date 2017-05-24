@@ -1,7 +1,7 @@
 var util = require('util')
 var cluster = require('cluster');
 
-var schedule = require('node-schedule');
+// var schedule = require('node-schedule');
 var numCPUs = require("os").cpus().length;
 var socketCluster = require('socketcluster-client');
 var async = require('async');
@@ -96,7 +96,7 @@ if(require.main == module) {
 
 	var options = {
 		'hostname': 'localhost',
-		// 'hostname':'104.154.220.2', 
+		// 'hostname':'104.154.175.81', 
 		port: 8000
 	}
 	// var arr = [];
