@@ -95,8 +95,8 @@ module.exports = clientModule;
 if(require.main == module) {
 
 	var options = {
-		'hostname': 'localhost',
-		// 'hostname':'104.154.175.81', 
+		// 'hostname': 'localhost',
+		'hostname':'35.188.60.235', 
 		port: 8000
 	}
 	// var arr = [];
