@@ -4,6 +4,7 @@ var cluster = require('cluster');
 var schedule = require('node-schedule');
 var numCPUs = require("os").cpus().length;
 var socketCluster = require('socketcluster-client');
+var async = require('async');
 
 
 var clientModule = {
@@ -46,23 +47,37 @@ var clientModule = {
 			if(err) {
 				console.log(err);
 			} else {
-				var channel_name =/* process.argv[2] || */channlName || 'chann';
+				var channel_name =/* process.argv[2] || */channlName || 'broadcast';
 				self.subscribe(socket, channel_name, function (err, chatChannel) {
 					if(err) {
 						console.log(err); 
 					} else {
-						var data = {
-							msg:  /*process.argv[3] ||*/ msgData || 'hello_there',
-							channel_name: channel_name,
-						};
+						// for(var t=1;t<=2;t++) {
+							var cntr = 0;
+							setInterval(function () {
+								cntr++; 
+								var data = {
+									msg:  /*process.argv[3] ||*/ msgData || 'hello_there',
+									channel_name: channel_name,
+								};
+								data.msg = data.msg + cntr;
+							    self.send(socket, data.msg, function(err, msg){
+									console.log('msg send successfully: ' + msg);
+								});
+							}, 10000); 
+						// }
+						// var data = {
+						// 	msg:  /*process.argv[3] ||*/ msgData || 'hello_there',
+						// 	channel_name: channel_name,
+						// };
 
-						chatChannel.watch(function(res) {
-							console.log(res);
-						});
+						// chatChannel.watch(function(res) {
+						// 	// console.log(res);
+						// });
 
-						self.send(socket, data, function(err, msg){
-							console.log('msg send successfully');
-						});
+						// self.send(socket, data, function(err, msg){
+						// 	console.log('msg send successfully: ' + data.msg);
+						// });
 					}
 				});
 			}
@@ -80,39 +95,28 @@ module.exports = clientModule;
 if(require.main == module) {
 
 	var options = {
-		'hostname':'104.154.63.189', 
+		'hostname': 'localhost',
+		// 'hostname':'104.154.220.2', 
 		port: 8000
 	}
-
-	// var cl = clientModule;
-	// if (cluster.isMaster) {
-	//   for (var i = 0; i < 1000; i++) {
-	//     cluster.fork();
-	//   }
-
-	//   cluster.on("exit", function(worker, code, signal) {
-	//     cluster.fork();
-	//   });
-	// } else {
-	// 	var msgData = 'hello_there';
-	// 	cl.goForIt(options,i, msgData);
-	//   // http.createServer(function(request, response) {
-	//   //   console.log("Request for:  " + request.url);
-	//   //   response.writeHead(200);
-	//   //   response.end("hello world\n");
-	//   // }).listen(port);
-	// }
+	// var arr = [];
 	// for(var i=1;i<=10;i++) {
-		var cl = clientModule;
-		var msgData = 'hello_there';
-		cl.goForIt(options,1, msgData);
+	// 	arr.push(i);
 	// }
+	var cl = clientModule;
+	// console.log("size = " + arr.length);
+	// async.each(arr, function(item) {
+			// if (cluster.isMaster) {
+			// 		for(var i=0;i<10;i++) 
+			//     	cluster.fork();
+				  // cluster.on("exit", function(worker, code, signal) {
+				  // 	// console.log('heu');
+				  //   cluster.fork();
+				  // });
+			// } else {
+					var msgData="hi there";
+					cl.goForIt(options,"broadcast",msgData);
+			// }	
+		// }, console.log
+	// )
 }
-
-
-/*
-TODO:
-1. make the chat continous through terminal
-2. pass every variable through argv . i.e the msg and the channel etc
-3. make 100 concurrent channels 
-*/
