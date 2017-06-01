@@ -52,7 +52,7 @@ var clientModule = {
 					if(err) {
 						console.log(err); 
 					} else {
-						// for(var t=1;t<=2;t++) {
+						for(var t=1;t<=1;t++) {
 							var cntr = 0;
 							setInterval(function () {
 								cntr++; 
@@ -64,8 +64,8 @@ var clientModule = {
 							    self.send(socket, data.msg, function(err, msg){
 									console.log('msg send successfully: ' + msg);
 								});
-							}, 10000); 
-						// }
+							}, 1000); 
+						}
 						// var data = {
 						// 	msg:  /*process.argv[3] ||*/ msgData || 'hello_there',
 						// 	channel_name: channel_name,
@@ -95,8 +95,8 @@ module.exports = clientModule;
 if(require.main == module) {
 
 	var options = {
-		// 'hostname': 'localhost',
-		'hostname':'35.188.60.235', 
+		'hostname': 'localhost',
+		// 'hostname':'35.188.60.235', 
 		port: 8000
 	}
 	// var arr = [];
@@ -114,8 +114,8 @@ if(require.main == module) {
 				  //   cluster.fork();
 				  // });
 			// } else {
-					var msgData="hi there";
-					cl.goForIt(options,"broadcast",msgData);
+	var msgData = "hi there";
+	cl.goForIt(options,"broadcast",msgData);
 			// }	
 		// }, console.log
 	// )
